@@ -16,3 +16,9 @@ class InitDict():
                 thedict[key_a].update({key_b:{key_c:val}})
         else:
             thedict.update({key_a:{key_b:{key_c:val}}})
+
+#向文件中写入字典数据
+def writeDict(fout, myDict):
+    for key, value in myDict.items():
+        out_text = key +":" + str(myDict[key]) + "\n"
+        fout.writelines(out_text)

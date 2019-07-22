@@ -1,0 +1,18 @@
+class InitDict():
+    #初始化二维字典
+    def addTwoDimDict(thedict, key_a, key_b, val):
+      if key_a in thedict:
+        thedict[key_a].update({key_b: val})
+      else:
+        thedict.update({key_a:{key_b: val}})
+
+
+    #初始化三维字典
+    def addThreeDimDict(thedict, key_a, key_b, key_c, val):
+        if key_a in thedict:
+            if key_b in thedict[key_a]:
+                thedict[key_a][key_b].update({key_c:val})
+            else:
+                thedict[key_a].update({key_b:{key_c:val}})
+        else:
+            thedict.update({key_a:{key_b:{key_c:val}}})

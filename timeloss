@@ -1,0 +1,33 @@
+import time
+import functools
+
+DEBUG = 0  # 在需要分析时效性的时候将该量置为1，否则置为0
+def timeLoss_calc_decorator(func):
+    '''
+    用于计算函数耗时的装饰器
+    '''
+    @functools.wraps(func)
+    def wrapper(*args, **kw):
+        if DEBUG:
+            start_time = time.time()
+            result = func(*args, **kw)
+            end_time = time.time()
+            loss_time = end_time - start_time
+            print("%s耗时：%.3f秒" % (func.__name__, loss_time))
+        else:
+            result = func(*args, **kw)
+        return result
+    return wrapper
+
+@timeLoss_calc_decorator
+def test():
+    print(123)
+    time.sleep(1)
+
+
+if __name__ == '__main__':
+    t00 = time.time()
+    test()
+    t10 = time.time()
+    spend1 = t10 - t00
+    print("运行耗时%.7f秒" % spend1)

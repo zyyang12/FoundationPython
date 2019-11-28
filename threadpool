@@ -1,0 +1,23 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+from concurrent.futures import ThreadPoolExecutor
+from threading import currentThread
+import time
+
+strs = ['1', '2', '3','4', '5', '6','7', '8', '9','10', '11', '12','13', '14', '15','16', '17', '18','19', '20', '21',]
+def sayhello (str):
+    print("%s:" % currentThread().getName())
+    print(str)
+    return 0
+
+if __name__ == '__main__':
+    max_workers = 3
+    executor = ThreadPoolExecutor(max_workers=max_workers)
+    #map方式添加任务
+    #executor.map(sayhello,strs)
+
+    for str in strs:
+        executor.submit(sayhello, str)
+    executor.shutdown()
+    print("主线程结束")

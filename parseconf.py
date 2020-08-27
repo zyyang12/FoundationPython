@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import os
+import chardet
 import configparser
 #配置文件解析
 class ParseConf:
@@ -7,7 +8,12 @@ class ParseConf:
         self.filename = filename
         if not os.path.exists(self.filename):
             print("配置文件不存在")
-            return
+            return -1
+        data = open(filename, "rb").read()
+        codeformat = chardet.detect(data).get("encoding")
+        if (codeformat != "utf-8"):
+            print("配置文件编码格式非utf-8格式，请修改编码格式")
+            return -1
         self.config = configparser.ConfigParser()
         self.config.read(self.filename, encoding='utf-8')
 
@@ -17,6 +23,7 @@ class ParseConf:
         sections = self.config.sections()
         if item in sections:
             options = self.config.options(item)
+            print(options)
             if member in options:
                 member_str = self.config.get(item, member)
             else:
